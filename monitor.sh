@@ -13,10 +13,10 @@ while true; do
   COUNT=$(find "$D" -maxdepth 1 -type f | wc -l)
 
   if [ "$COUNT" -gt 5 ]; then
-    OLDEST=$(find "$D" -maxdepth 1 -type f -printf '%T@ %p\n' | sort -n | head -n 1 | cut -d' ' -f2-)
+    OLDEST=$(ls -t "$D" | tail -n 1)
 
     if [ "$SAFE" -eq 0 ]; then
-      rm "$OLDEST"
+      rm "$D/$OLDEST"
       echo "[$(date)] Usunięto: $(basename "$OLDEST")" >> "$LOG"
       REM=$((REM+1))
     else
